@@ -490,7 +490,7 @@
         }
         
         .form-group label {
-            display: block;
+            display:  block;
             margin-bottom: 8px;
             color: var(--secondary-color);
             font-weight: bold;
@@ -506,7 +506,7 @@
             transition: var(--transition);
         }
         
-        .form-group input:focus,
+        .form group input:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: var(--primary-color);
@@ -878,9 +878,9 @@
                 <a href="#hours">Hours</a>
             </div>
             <div class="social-links">
-                <a href="#">📘</a>
-                <a href="#">📷</a>
-                <a href="#">🐦</a>
+                <a href="https://facebook.com">📘</a>
+                <a href="https://instagram.com">📷</a>
+                <a href="https://twitter.com">🐦</a>
             </div>
             <p>&copy; 2025 Advanced Transmission. All rights reserved.</p>
         </div>
@@ -947,7 +947,7 @@
             {
                 name: "Spirit Father",
                 rating: 5,
-                body: ""
+                body: "Very honest shop with good quality work."
             },
             {
                 name: "Christopher Coutts",
@@ -957,9 +957,66 @@
             {
                 name: "Shannon Staples",
                 rating: 1,
-                body: ""
+                body: "Poor service and unprofessional conduct."
             },
             {
                 name: "CT",
                 rating: 1,
-                body: ""
+                body: "Disappointing experience, would not recommend."
+            }
+        ];
+
+        // Function to render reviews
+        function renderReviews(startIndex, count) {
+            const container = document.getElementById('reviewsContainer');
+            for (let i = startIndex; i < startIndex + count && i < reviews.length; i++) {
+                const review = reviews[i];
+                const reviewCard = document.createElement('div');
+                reviewCard.className = 'review-card';
+                if (i >= 3) reviewCard.classList.add('hidden-review');
+                reviewCard.innerHTML = `
+                    <div class="review-header">
+                        <span class="reviewer-name">${review.name}</span>
+                        <span class="review-rating">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span>
+                    </div>
+                    <p class="review-body">${review.body || 'No comment provided.'}</p>
+                `;
+                container.appendChild(reviewCard);
+            }
+            updateShowMoreButton();
+        }
+
+        // Function to show more reviews
+        function showMoreReviews() {
+            const hiddenReviews = document.querySelectorAll('.hidden-review');
+            hiddenReviews.forEach(review => review.classList.remove('hidden-review'));
+            updateShowMoreButton();
+        }
+
+        // Function to update show more button visibility
+        function updateShowMoreButton() {
+            const hiddenReviews = document.querySelectorAll('.hidden-review');
+            const showMoreBtn = document.getElementById('showMoreBtn');
+            showMoreBtn.style.display = hiddenReviews.length > 0 ? 'block' : 'none';
+        }
+
+        // Initial render of first 3 reviews
+        renderReviews(0, reviews.length);
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
